@@ -6,10 +6,12 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-               git url: 'https://github.com/alaintruong77/cicd.git', branch: 'main'
+                echo "Current Branch: ${env.BRANCH_NAME}"
+                git url: 'https://github.com/alaintruong77/cicd.git'
+                sh 'git branch -a'
             }
         }
-        stage('Build Docker Image') {
+         stage('Build Docker Image') {
             steps {
                 sh '''
                 docker build -t static-website-image .
