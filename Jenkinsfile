@@ -1,20 +1,28 @@
 pipeline {
     agent any
-    tools {
-        git 'Default' // Sử dụng cài đặt mặc định hoặc tên Git bạn cấu hình
-    }
+
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/alaintruong77/cicd.git'
+                git 'https://github.com/alaintruong77/cicd.git'
             }
         }
-        stage('Deploy') {
+        stage('Build Docker Image') {
             steps {
-                // Giả sử bạn deploy vào /var/www/html (thư mục mặc định của Nginx)
-                sh 'cp -r * /var/www/html/'
+                sh '''
+                docker build -t static-website-image .
+                '''
+            }
+        }
+        stage('Deploy Website') {
+            steps {
+                sh '''
+                docker rm -f static-website || true
+                docker run -d --name static-website -p 80:80 \
+                -v $(pwd)/public:/usr/share/nginx/html \
+                static-website-image
+                '''
             }
         }
     }
-    
 }
