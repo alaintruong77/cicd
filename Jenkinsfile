@@ -4,7 +4,7 @@ pipeline {
         git 'Git' // Đảm bảo tên này khớp với tên Git Tool đã cấu hình
     }
     stages {
-        stage('Default') {
+        stage('Clone Repository') {
             steps {
                git url: 'https://github.com/alaintruong77/cicd.git', branch: 'main'
             }
