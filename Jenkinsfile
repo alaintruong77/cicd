@@ -4,7 +4,10 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', 'https://github.com/alaintruong77/cicd.git'
+                git(
+                    url: 'https://github.com/alaintruong77/cicd.git', 
+                    branch: 'main'
+                )
             }
         }
         stage('Build Docker Image') {
