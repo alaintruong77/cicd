@@ -1,13 +1,12 @@
 pipeline {
     agent any
-
+    tools {
+        git 'Git' // Sử dụng Git tool đã cấu hình
+    }
     stages {
         stage('Clone Repository') {
             steps {
-                git(
-                    url: 'https://github.com/alaintruong77/cicd.git', 
-                    branch: 'main'
-                )
+                git 'https://github.com/alaintruong77/cicd.git'
             }
         }
         stage('Build Docker Image') {
@@ -26,6 +25,13 @@ pipeline {
                 static-website-image
                 '''
             }
+        }
+        stage('Cleanup') {
+           steps {
+                sh '''
+                    docker system prune -af
+                '''
+           }
         }
     }
 }
