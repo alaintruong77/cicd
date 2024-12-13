@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        git 'Git' // Đảm bảo tên này khớp với tên Git Tool đã cấu hình
+        git 'Default' // Đảm bảo tên này khớp với tên Git Tool đã cấu hình
     }
     stages {
         stage('Clone Repository') {
